@@ -1,0 +1,28 @@
+{
+  "name": "graph-lib",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "npm run tscwatch",
+    "tscwatch": "tsc -w",
+    "tsc": "tsc",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^2.8.2",
+    "@types/jest": "^21.1.8",
+    "grunt": "^1.0.1",
+    "grunt-contrib-testem": "^0.5.22",
+    "jest": "^21.2.1",
+    "phantomjs": "^2.1.7",
+    "systemjs-jest": "^1.0.0"
+  },
+  "jest": {
+    "verbose": true,    
+    "scriptPreprocessor": "systemjs-jest",
+    "testRegex": "(.)*-spec\\.js$",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ]
+  }
+}
