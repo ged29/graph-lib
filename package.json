@@ -2,27 +2,20 @@
   "name": "graph-lib",
   "version": "0.0.1",
   "scripts": {
-    "start": "npm run tscwatch",
-    "tscwatch": "tsc -w",
+    "start": "npm run tscw",
+    "karma": "karma start karma.conf.js --reporters kjhtml",
     "tsc": "tsc",
-    "test": "jest"
+    "tscw": "tsc -w"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.2",
-    "@types/jest": "^21.1.8",
-    "grunt": "^1.0.1",
-    "grunt-contrib-testem": "^0.5.22",
-    "jest": "^21.2.1",
-    "phantomjs": "^2.1.7",
-    "systemjs-jest": "^1.0.0"
-  },
-  "jest": {
-    "verbose": true,    
-    "scriptPreprocessor": "systemjs-jest",
-    "testRegex": "(.)*-spec\\.js$",
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ]
+    "jasmine-core": "^2.8.0",
+    "karma": "^1.7.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.1",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-typescript": "^3.0.8",
+    "karma-typescript-es6-transform": "^1.0.2",
+    "typescript": "^2.6.2"
   }
 }
