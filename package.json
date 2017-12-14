@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "start": "npm run tscw",
-    "karma": "karma start karma.conf.js --reporters kjhtml",
+    "karma": "karma start karma.conf.js",
     "tsc": "tsc",
     "tscw": "tsc -w"
   },

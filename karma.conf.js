@@ -2,18 +2,21 @@ module.exports = (config) => {
     config.set({
         frameworks: ["jasmine", "karma-typescript"],
         files: [
-            { pattern: "src/**/*.+(js|ts)" },
+            { pattern: "src/**/*.ts" },
         ],
         preprocessors: {
-            "src/**/*.+(js|ts)": ["karma-typescript"],
+            "src/**/*.ts": ["karma-typescript"],
         },
         reporters: ["kjhtml", "karma-typescript"],
         karmaTypescriptConfig: {
-            compilerOptions: {
-                transforms: [require("karma-typescript-es6-transform")()]
-            },
+            coverageOptions: {
+                instrumentation: false
+            }
         },
 
-        browsers: ["Chrome"]
+        browsers: ["Chrome"],
+        singleRun: false,
+        autoWatch: true,
+        autoWatchBatchDelay: 700
     });
 }
