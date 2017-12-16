@@ -17,6 +17,7 @@ module.exports = (config) => {
         browsers: ["Chrome"],
         singleRun: false,
         autoWatch: true,
-        autoWatchBatchDelay: 700
+        autoWatchBatchDelay: 1000,
+        logLevel: config.LOG_DISABLE
     });
 }

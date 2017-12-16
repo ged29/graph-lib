@@ -79,7 +79,7 @@ describe("setEdge", () => {
 
     it("creates the edge if it isn't part of the graph", function () {
         var edgeId = "a:b",
-            edgeObj: IEdge = { outNodeId: "a", inNodeId: "b" };
+            edgeObj: IEdge = { fromNodeId: "a", toNodeId: "b" };
 
         g.setNode("a");
         g.setNode("b");
@@ -134,7 +134,7 @@ describe("removeEdge", () => {
 
     it("can remove an edge by connected node ids", function () {
         var edgeId = "a:b",
-            edgeObj: IEdge = { outNodeId: "a", inNodeId: "b" };;
+            edgeObj: IEdge = { fromNodeId: "a", toNodeId: "b" };;
 
         g.setEdge("a", "b");
 
@@ -175,12 +175,12 @@ describe("inEdges", () => {
         g.setEdge("b", "c");
 
         expect(g.inEdges("a")).toEqual([]);
-        expect(g.inEdges("b")).toEqual([{ outNodeId: "a", inNodeId: "b" }]);
-        expect(g.inEdges("c")).toEqual([{ outNodeId: "b", inNodeId: "c" }]);
+        expect(g.inEdges("b")).toEqual([{ fromNodeId: "a", toNodeId: "b" }]);
+        expect(g.inEdges("c")).toEqual([{ fromNodeId: "b", toNodeId: "c" }]);
     });
 
     it("can return only incoming edges from a specified node", function () {
-        var compareFn = (a: IEdge, b: IEdge) => a.outNodeId.localeCompare(b.outNodeId);
+        var compareFn = (a: IEdge, b: IEdge) => a.fromNodeId.localeCompare(b.toNodeId);
         g.setEdge("a", "b");
         g.setEdge("a", "c");
         g.setEdge("b", "c");
@@ -189,17 +189,17 @@ describe("inEdges", () => {
         g.setEdge("x", "b");
 
         expect(g.inEdges("c").sort(compareFn)).toEqual([
-            { outNodeId: "a", inNodeId: "c" },
-            { outNodeId: "b", inNodeId: "c" }
+            { fromNodeId: "a", toNodeId: "c" },
+            { fromNodeId: "b", toNodeId: "c" }
         ]);
-        expect(g.inEdges("c", "a")).toEqual([{ outNodeId: "a", inNodeId: "c" }]);
+        expect(g.inEdges("c", "a")).toEqual([{ fromNodeId: "a", toNodeId: "c" }]);
 
         expect(g.inEdges("b").sort(compareFn)).toEqual([
-            { outNodeId: "a", inNodeId: "b" },
-            { outNodeId: "x", inNodeId: "b" },
-            { outNodeId: "z", inNodeId: "b" }
+            { fromNodeId: "a", toNodeId: "b" },
+            { fromNodeId: "x", toNodeId: "b" },
+            { fromNodeId: "z", toNodeId: "b" }
         ]);
-        expect(g.inEdges("b", "z").sort(compareFn)).toEqual([{ outNodeId: "z", inNodeId: "b" }]);
+        expect(g.inEdges("b", "z").sort(compareFn)).toEqual([{ fromNodeId: "z", toNodeId: "b" }]);
     });
 
 });
@@ -218,12 +218,12 @@ describe("outEdges", () => {
         g.setEdge("b", "c");
 
         expect(g.outEdges("c")).toEqual([]);
-        expect(g.outEdges("b")).toEqual([{ outNodeId: "b", inNodeId: "c" }]);
-        expect(g.outEdges("a")).toEqual([{ outNodeId: "a", inNodeId: "b" }]);
+        expect(g.outEdges("b")).toEqual([{ fromNodeId: "b", toNodeId: "c" }]);
+        expect(g.outEdges("a")).toEqual([{ fromNodeId: "a", toNodeId: "b" }]);
     });
 
     it("can return only incoming edges from a specified node", function () {
-        var compareFn = (a: IEdge, b: IEdge) => a.inNodeId.localeCompare(b.inNodeId);
+        var compareFn = (a: IEdge, b: IEdge) => a.toNodeId.localeCompare(b.toNodeId);
         g.setEdge("a", "b");
         g.setEdge("a", "c");
         g.setEdge("b", "c");
@@ -232,16 +232,16 @@ describe("outEdges", () => {
         g.setEdge("x", "b");
 
         expect(g.outEdges("z").sort(compareFn)).toEqual([
-            { outNodeId: "z", inNodeId: "a" },
-            { outNodeId: "z", inNodeId: "b" }
+            { fromNodeId: "z", toNodeId: "a" },
+            { fromNodeId: "z", toNodeId: "b" }
         ]);
-        expect(g.outEdges("z", "a")).toEqual([{ outNodeId: "z", inNodeId: "a" }]);
+        expect(g.outEdges("z", "a")).toEqual([{ fromNodeId: "z", toNodeId: "a" }]);
 
         expect(g.outEdges("a").sort(compareFn)).toEqual([
-            { outNodeId: "a", inNodeId: "b" },
-            { outNodeId: "a", inNodeId: "c" }
+            { fromNodeId: "a", toNodeId: "b" },
+            { fromNodeId: "a", toNodeId: "c" }
         ]);
-        expect(g.outEdges("a", "b").sort(compareFn)).toEqual([{ outNodeId: "a", inNodeId: "b" }]);
+        expect(g.outEdges("a", "b").sort(compareFn)).toEqual([{ fromNodeId: "a", toNodeId: "b" }]);
     });
 
 });
@@ -255,25 +255,25 @@ describe("nodeEdges", () => {
     });
 
     it("returns all edges that this node points at", function () {
-        let compareFn = (a: IEdge, b: IEdge) => a.inNodeId.localeCompare(b.inNodeId);
+        let compareFn = (a: IEdge, b: IEdge) => a.toNodeId.localeCompare(b.toNodeId);
         // [a] -> [b] -> [c]
         g.setEdge("a", "b");
         g.setEdge("b", "c");
 
-        expect(g.nodeEdges("a")).toEqual([{ outNodeId: "a", inNodeId: "b" }]);
+        expect(g.nodeEdges("a")).toEqual([{ fromNodeId: "a", toNodeId: "b" }]);
 
         expect(g.nodeEdges("b").sort(compareFn)).toEqual([
-            { outNodeId: "a", inNodeId: "b" },
-            { outNodeId: "b", inNodeId: "c" }
+            { fromNodeId: "a", toNodeId: "b" },
+            { fromNodeId: "b", toNodeId: "c" }
         ]);
 
-        expect(g.nodeEdges("c")).toEqual([{ outNodeId: "b", inNodeId: "c" }]);
+        expect(g.nodeEdges("c")).toEqual([{ fromNodeId: "b", toNodeId: "c" }]);
     });
 
     it("can return only incoming edges from a specified node", function () {
         let compareFn = (a: IEdge, b: IEdge) => {
-            let outNodeCompare = a.outNodeId.localeCompare(b.outNodeId);
-            return outNodeCompare === 0 ? a.inNodeId.localeCompare(b.inNodeId) : outNodeCompare;
+            let outNodeCompare = a.fromNodeId.localeCompare(b.fromNodeId);
+            return outNodeCompare === 0 ? a.toNodeId.localeCompare(b.toNodeId) : outNodeCompare;
         };
 
         g.setEdge("a", "b");
@@ -284,19 +284,19 @@ describe("nodeEdges", () => {
         g.setEdge("x", "b");
 
         expect(g.nodeEdges("b").sort(compareFn)).toEqual([
-            { outNodeId: "a", inNodeId: "b" },
-            { outNodeId: "b", inNodeId: "c" },
-            { outNodeId: "x", inNodeId: "b" },
-            { outNodeId: "z", inNodeId: "b" }
+            { fromNodeId: "a", toNodeId: "b" },
+            { fromNodeId: "b", toNodeId: "c" },
+            { fromNodeId: "x", toNodeId: "b" },
+            { fromNodeId: "z", toNodeId: "b" }
         ]);
-        expect(g.nodeEdges("b", "c").sort(compareFn)).toEqual([{ outNodeId: "b", inNodeId: "c" }]);
+        expect(g.nodeEdges("b", "c").sort(compareFn)).toEqual([{ fromNodeId: "b", toNodeId: "c" }]);
 
         expect(g.nodeEdges("a").sort(compareFn)).toEqual([
-            { outNodeId: "a", inNodeId: "b" },
-            { outNodeId: "a", inNodeId: "c" },
-            { outNodeId: "z", inNodeId: "a" }
+            { fromNodeId: "a", toNodeId: "b" },
+            { fromNodeId: "a", toNodeId: "c" },
+            { fromNodeId: "z", toNodeId: "a" }
         ]);
-        expect(g.nodeEdges("a", "z").sort(compareFn)).toEqual([{ outNodeId: "z", inNodeId: "a" }]);
+        expect(g.nodeEdges("a", "z").sort(compareFn)).toEqual([{ fromNodeId: "z", toNodeId: "a" }]);
     });
 });
 

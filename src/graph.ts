@@ -66,40 +66,40 @@ export class Graph {
         return this;
     }
 
-    setEdge(aId: string, bId: string, value?: TValue): this {
-        var edgeId: string = `${aId}:${bId}`,
-            edgeObj: IEdge = { outNodeId: aId, inNodeId: bId };
-        // [aId]------|edgeId|--------->[bId]
-        this.setNode(aId).setNode(bId);
+    setEdge(fromNodeId: string, toNodeId: string, value?: TValue): this {
+        var edgeId: string = `${fromNodeId}:${toNodeId}`,
+            edgeObj: IEdge = { fromNodeId, toNodeId };
+        // [fromNodeId]------|edgeId|--------->[toNodeId]
+        this.setNode(fromNodeId).setNode(toNodeId);
 
-        this.pred[bId][aId] = edgeObj;
-        this.sucs[aId][bId] = edgeObj;
+        this.pred[toNodeId][fromNodeId] = edgeObj;
+        this.sucs[fromNodeId][toNodeId] = edgeObj;
 
-        this.out[aId][edgeId] = edgeObj;
-        this.in[bId][edgeId] = edgeObj;
+        this.out[fromNodeId][edgeId] = edgeObj;
+        this.in[toNodeId][edgeId] = edgeObj;
 
         this.edges[edgeId] = value;
         this.edgeCount += 1;
         return this;
     }
 
-    removeEdge(aId: string, bId: string): this {
-        var edgeId: string = `${aId}:${bId}`;
+    removeEdge(fromNodeId: string, toNodeId: string): this {
+        var edgeId: string = `${fromNodeId}:${toNodeId}`;
         if (!this.edges.hasOwnProperty(edgeId)) {
             return this;
         }
 
-        delete this.pred[bId][aId];
-        delete this.sucs[aId][bId];
-        delete this.out[aId][edgeId];
-        delete this.in[bId][edgeId];
+        delete this.pred[toNodeId][fromNodeId];
+        delete this.sucs[fromNodeId][toNodeId];
+        delete this.out[fromNodeId][edgeId];
+        delete this.in[toNodeId][edgeId];
         delete this.edges[edgeId];
         this.edgeCount -= 1;
         return this;
     }
 
-    hasEdge(aId: string, bId: string): boolean {
-        return this.edges.hasOwnProperty(`${aId}:${bId}`);
+    hasEdge(fromNodeId: string, toNodeId: string): boolean {
+        return this.edges.hasOwnProperty(`${fromNodeId}:${toNodeId}`);
     }
 
     inEdges(inNodeId: string, filterByOutNodeId?: string): IEdge[] {
@@ -165,8 +165,10 @@ export class Graph {
 }
 
 export interface IEdge {
-    outNodeId: string;
-    inNodeId: string;
+    // outNodeId: string;
+    // inNodeId: string;
+    fromNodeId: string;
+    toNodeId: string;
 }
 
 type TValue = number | string;
