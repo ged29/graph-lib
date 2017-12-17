@@ -2,20 +2,20 @@
   "name": "graph-lib",
   "version": "0.0.1",
   "scripts": {
-    "start": "npm run tscw",
-    "karma": "karma start karma.conf.js",
-    "tsc": "tsc",
-    "tscw": "tsc -w"
+    "test": "gulp test"
   },
-  "devDependencies": {
-    "@types/jasmine": "^2.8.2",
-    "jasmine-core": "^2.8.0",
-    "karma": "^1.7.1",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^1.1.1",
-    "karma-jasmine-html-reporter": "^0.2.2",
-    "karma-typescript": "^3.0.8",
-    "karma-typescript-es6-transform": "^1.0.2",
-    "typescript": "^2.6.2"
+  "devDependencies": {        
+    "@types/jasmine": "^2.5.38",
+    "@types/node": "^6.0.52",
+    "browser-sync": "^2.18.1",
+    "path": "^0.12.7",
+    "del": "^2.2.2",
+    "glob": "^7.1.1",
+    "gulp": "^3.9.1",
+    "gulp-inject": "^4.1.0",    
+    "jasmine-core": "^2.5.2",
+    "jasmine-node": "^1.14.5",    
+    "run-sequence": "^1.2.2",
+    "systemjs": "^0.19.41"    
   }
 }

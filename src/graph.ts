@@ -132,6 +132,35 @@ export class Graph {
         return Object.keys(outNodeIdEdges).map(edgeId => outNodeIdEdges[edgeId]);
     }
 
+    /**
+     * Returns nodes in the graph that have no out-edges
+     */
+    sinks(): string[] {
+        var result: string[] = [];
+
+        for (var nodeId in this.nodes) {
+            if (Object.keys(this.out[nodeId]).length === 0) {
+                result.push(nodeId);
+            }
+        }
+
+        return result;
+    }
+    /**
+     * Returns nodes in the graph that have no in-edges
+     */
+    sources(): string[] {
+        var result: string[] = [];
+
+        for (var nodeId in this.nodes) {
+            if (Object.keys(this.in[nodeId]).length === 0) {
+                result.push(nodeId);
+            }
+        }
+
+        return result;
+    }
+
     predecessors(nodeId: string): string[] {
         return this.pred.hasOwnProperty(nodeId)
             ? Object.keys(this.pred[nodeId])
@@ -165,8 +194,6 @@ export class Graph {
 }
 
 export interface IEdge {
-    // outNodeId: string;
-    // inNodeId: string;
     fromNodeId: string;
     toNodeId: string;
 }

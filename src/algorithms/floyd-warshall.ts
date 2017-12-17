@@ -25,19 +25,22 @@ export function floydWarshall(
         });
 
         edgeFn(fromNodeId).forEach(edge => {
-            let predecessor = edge.fromNodeId === fromNodeId ? edge.toNodeId : edge.fromNodeId,
+            let toNodeId = edge.fromNodeId === fromNodeId ? edge.toNodeId : edge.fromNodeId,
                 distance = weightFn(edge);
 
-            result[outerNodeId][innerNodeId] = { distance, predecessor };
+            result[fromNodeId][toNodeId] = {
+                distance: distance,
+                predecessor: fromNodeId
+            };
         });
     });
 
-    var k: number, i: number, j: number;
-    
     nodeIds.forEach((k) => {
         let rowK = result[k];
+
         nodeIds.forEach((i) => {
             let rowI = result[i];
+
             nodeIds.forEach((j) => {
                 var kj = rowK[j],
                     ik = rowI[k],

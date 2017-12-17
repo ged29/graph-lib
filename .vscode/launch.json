@@ -1,14 +1,46 @@
 {
-    // Use IntelliSense to learn about possible Node.js debug attributes.
+    // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug Current TypeScript File",
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
-            "program": "${file}"            
+            "program": "${file}",
+            "stopOnEntry": true,
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ]
+        },
+        {
+            "name": "Debug Gulp Tasks",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
+            "stopOnEntry": false,
+            "args": [
+                "createSpecRunner"
+            ]
+        },
+        {
+            "name": "Debug Tests",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/node_modules/jasmine-node/bin/jasmine-node",
+            "stopOnEntry": false,
+            "args": [
+                "dist",
+                "--verbose"
+            ],
+            "cwd": "${workspaceRoot}",
+            "sourceMaps": true,
+            "outDir": "${workspaceRoot}/dist"
         }
     ]
 }

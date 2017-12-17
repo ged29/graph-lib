@@ -300,6 +300,28 @@ describe("nodeEdges", () => {
     });
 });
 
+describe("sources", function () {
+    let g: Graph;
+    beforeEach(() => g = new Graph());
+
+    it("returns nodes in the graph that have no in-edges", function () {
+        g.setPath(["a", "b", "c"]);
+        g.setNode("d");
+        expect(g.sources().sort()).toEqual(["a", "d"]);
+    });
+});
+
+describe("sinks", function () {
+    let g: Graph;
+    beforeEach(() => g = new Graph());
+
+    it("returns nodes in the graph that have no out-edges", function () {
+        g.setPath(["a", "b", "c"]);
+        g.setNode("d");
+        expect(g.sinks().sort()).toEqual(["c", "d"]);
+    });
+});
+
 describe("setPath", () => {
     let g: Graph;
     beforeEach(() => g = new Graph());
