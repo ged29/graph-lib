@@ -2,20 +2,25 @@
   "name": "graph-lib",
   "version": "0.0.1",
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "w": "cd src",
+    "tsc": "tsc"
   },
-  "devDependencies": {        
+  "devDependencies": {
     "@types/jasmine": "^2.5.38",
     "@types/node": "^6.0.52",
     "browser-sync": "^2.18.1",
-    "path": "^0.12.7",
     "del": "^2.2.2",
     "glob": "^7.1.1",
     "gulp": "^3.9.1",
-    "gulp-inject": "^4.1.0",    
+    "gulp-inject": "^4.1.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-typescript": "^3.2.3",
     "jasmine-core": "^2.5.2",
-    "jasmine-node": "^1.14.5",    
+    "jasmine-node": "^1.14.5",
+    "path": "^0.12.7",
     "run-sequence": "^1.2.2",
-    "systemjs": "^0.19.41"    
+    "systemjs": "^0.19.41",
+    "typescript": "^2.6.2"
   }
 }

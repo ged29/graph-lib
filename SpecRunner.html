@@ -8,17 +8,17 @@
     <script src="./node_modules/systemjs/dist/system.js"></script>
     <script>
         System.config({ packages: { 'dist': {} } });
-        Promise.all([
+        Promise.all([      
             
-        System.import('/dist/graph.spec.js'),
+        System.import('/dist/graph.spec.js'),      
             
-        System.import('/dist/algorithms/bfs.spec.js'),
+        System.import('/dist/algorithms/bfs.spec.js'),      
             
-        System.import('/dist/algorithms/dfs.spec.js'),
+        System.import('/dist/algorithms/dfs.spec.js'),      
             
-        System.import('/dist/algorithms/floyd-warshall.spec.js'),
+        System.import('/dist/algorithms/floyd-warshall.spec.js'),      
             
-        System.import('/dist/algorithms/topsort.spec.js')
+        System.import('/dist/algorithms/topsort.spec.js')      
             
         ]);
     </script>

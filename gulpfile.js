@@ -6,29 +6,37 @@ var fs = require("fs"),
     exec = require("child_process").exec,
     inject = require("gulp-inject"),
     browserSync = require('browser-sync'),
-    runSequence = require('run-sequence');
+    runSequence = require('run-sequence'),
+
+    ts = require("gulp-typescript"),
+    srcMap = require("gulp-sourcemaps"),
+    tsProject = ts.createProject("./tsconfig.json", {
+        typescript: require("typescript")
+    });
+
+gulp.task("tsc", () => {
+    return gulp.src(["src/**/*.ts", "node_modules/@types/**/*.d.ts"])
+        .pipe(srcMap.init({ loadMaps: true }))
+        .pipe(tsProject())
+        .js
+        .pipe(srcMap.write(".", { includeContent: false }))
+        .pipe(gulp.dest("dist"));
+});
 
 gulp.task("clear", () => {
     return del(["./dist/**/*"]);
 });
 
-gulp.task("compile", (done) => {
-    exec("tsc -p src", (error, stdout, stderr) => {
-        console.log(stdout);
-        done();
-    });
-});
-
 gulp.task("build", (done) => {
-    runSequence("clear", "compile", done);
+    runSequence("clear", "tsc", done);
 });
 
-gulp.task("watch", () => {
-    return gulp.watch("./src/**/*.ts", ["compile"]);
+gulp.task("watch", ["build"], () => {
+    return gulp.watch("./src/**/*.ts", ["tsc"]);
 });
 
 gulp.task("createSpecRunner", () => {
-    gulp.src("./SpecRunner.html")
+    return gulp.src("./SpecRunner.html")
         .pipe(inject(gulp.src(["./dist/**/*.spec.js"], { read: false }), {
             starttag: "Promise.all([",
             endtag: "]);",
@@ -43,14 +51,16 @@ gulp.task("launchBrowserSync", () => {
     var options = {
         port: 3000,
         server: './',
-        files: ['./dist/**/*.js',
-            './dist/**/*.spec.js',
-            '!./dist/**/*.js.map'],
+        //files: ['./dist/**/*.js', './dist/**/*.spec.js'],
         logFileChanges: true,
         logLevel: 'info',
         logPrefix: 'spec-runner',
         notify: true,
+        ghostMode: false,
         reloadDelay: 1000,
+        reloadDebounce: 1000,
+        injectChanges: false,
+        minify: false,
         startPath: 'SpecRunner.html'
     };
 
@@ -58,5 +68,5 @@ gulp.task("launchBrowserSync", () => {
 });
 
 gulp.task("test", (done) => {
-    runSequence("build", "watch", "createSpecRunner", "launchBrowserSync", done);
+    runSequence("watch", "createSpecRunner", "launchBrowserSync", done);
 });
