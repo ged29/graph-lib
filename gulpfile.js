@@ -51,7 +51,7 @@ gulp.task("launchBrowserSync", () => {
     var options = {
         port: 3000,
         server: './',
-        //files: ['./dist/**/*.js', './dist/**/*.spec.js'],
+        files: ['./dist/**/*.js', './dist/**/*.spec.js'],
         logFileChanges: true,
         logLevel: 'info',
         logPrefix: 'spec-runner',
